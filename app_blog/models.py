@@ -7,5 +7,9 @@ class Post(models.Model):
     text = models.TextField('Текст поста', blank=True, db_index=True)
     date_pub_at = models.DateTimeField('Дата создания', auto_now_add=True)
 
+    class Meta:
+        verbose_name = 'Пост'
+        verbose_name_plural = 'Посты'
+
     def __str__(self):
         return self.title
