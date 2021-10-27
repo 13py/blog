@@ -1,11 +1,7 @@
 {% extends 'app_blog/base_blog.html'%}
 
-{% block title %}
-
-{% endblock title %}
-
 {% block content %}
-    {% for post in posts %}
+    {% for post in posts.posts.all %}
         {% include 'app_blog/includes/post_card.html' %}
     {% endfor %}
 {% endblock content %}
