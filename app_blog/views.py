@@ -1,8 +1,11 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import get_list_or_404
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.views.generic.base import View
 
 from .models import Post
 from .models import Tag
+from .utils import ObjectDetailMixin
 
 
 class PostsList(View):
@@ -12,14 +15,9 @@ class PostsList(View):
         return render(request, 'app_blog/index.html', context)
 
 
-class PostDetail(View):
-    def get(self, request, slug):
-        post = get_object_or_404(
-            Post.objects.values('title', 'text'),
-            slug__iexact=slug
-        )
-        context = {'post': post}
-        return render(request, 'app_blog/post_detail.html', context)
+class PostDetail(ObjectDetailMixin, View):
+    model = Post
+    template = 'app_blog/post_detail.html'
 
 
 class TagsList(View):
@@ -29,8 +27,6 @@ class TagsList(View):
         return render(request, 'app_blog/tags_list.html', context)
 
 
-class TagPostsList(View):
-    def get(self, request, slug):
-        posts = get_object_or_404(Tag, slug=slug)
-        context = {'posts': posts}
-        return render(request, 'app_blog/tag_posts_list.html', context)
+class TagPostsList(ObjectDetailMixin, View):
+    model = Tag
+    template = 'app_blog/tag_posts_list.html'
