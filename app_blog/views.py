@@ -1,4 +1,4 @@
-from django.shortcuts import get_list_or_404
+from django.shortcuts import get_list_or_404, redirect
 from django.shortcuts import render
 from django.views.generic.base import View
 
@@ -37,3 +37,10 @@ class TagCreate(View):
         form = TagForm()
         context = {'form': form}
         return render(request, 'app_blog/tag_create.html', context)
+
+    def post(self, request):
+        form = TagForm(request.POST)
+        if form.is_valid():
+            form = form.save()
+            return redirect('tag_create')
+        return render(request, 'app_blog/tag_create.html', context={'form': form})

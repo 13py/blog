@@ -11,12 +11,13 @@ class TagForm(forms.Form):
     title.widget.attrs.update({'class': 'form-control'})
     slug.widget.attrs.update({'class': 'form-control'})
 
-
     def clean_slug(self):
         new_slug = self.cleaned_data.get('slug').lower()
 
         if new_slug == 'create':
             raise ValidationError('Slug не дожен быть равен "create".')
+        if Tag.objects.filter(slug__iexact=new_slug).count():
+            raise ValidationError(f'Слаг {new_slug} уже существует.')
         return new_slug
 
     def save(self):
