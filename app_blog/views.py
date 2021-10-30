@@ -1,8 +1,8 @@
 from django.shortcuts import get_list_or_404
-from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.views.generic.base import View
 
+from .forms import TagForm
 from .models import Post
 from .models import Tag
 from .utils import ObjectDetailMixin
@@ -30,3 +30,10 @@ class TagsList(View):
 class TagPostsList(ObjectDetailMixin, View):
     model = Tag
     template = 'app_blog/tag_posts_list.html'
+
+
+class TagCreate(View):
+    def get(self, request):
+        form = TagForm()
+        context = {'form': form}
+        return render(request, 'app_blog/tag_create.html', context)
