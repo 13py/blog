@@ -1,6 +1,7 @@
 {% extends 'app_blog/base_blog.html'%}
 
 {% block content %}
+    <h1>Посты с тегом '{{ tag.slug }}'</h1>
     {% for post in tag.posts.all %}
         {% include 'app_blog/includes/post_card.html' %}
     {% endfor %}

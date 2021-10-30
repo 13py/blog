@@ -42,5 +42,5 @@ class TagCreate(View):
         form = TagForm(request.POST)
         if form.is_valid():
             form = form.save()
-            return redirect('tag_create')
+            return redirect(form)
         return render(request, 'app_blog/tag_create.html', context={'form': form})
